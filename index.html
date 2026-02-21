@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Biblioteca Manhwa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="detalle" class="modal">
+  <div class="modal-content" id="contenidoDetalle"></div>
+</div>
+
+<div id="tsparticles"></div>
+<div id="login">
+  <div class="login-box">
+    <h2>💜 Iniciar Sesión</h2>
+    <input type="email" id="email" placeholder="Correo">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+    <button onclick="registro()">Registrarse</button>
+  </div>
+</div>
+
+<audio id="sonido" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_soft_bell.mp3"></audio>
+
+  <header>
+<section class="top-bar">
+  <input type="text" id="buscador" placeholder="🔍 Buscar manhwa...">
+  <div class="stats">
+    <span id="total">0</span> 📚
+    <span id="leidos">0</span> ✅
+  </div>
+</section>
+
+<section class="dashboard">
+  <h2>📊 Estadísticas</h2>
+  <canvas id="graficaEstados"></canvas>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <h1>📚 Mi Biblioteca Manhwa</h1>
+    <button id="abrirModal">+ Agregar</button>
+  </header>
+
+  <section class="filtros">
+    <select id="filtroEstado">
+      <option value="todos">Todos</option>
+      <option value="Leyendo">Leyendo</option>
+      <option value="Completado">Completado</option>
+      <option value="Pausado">Pausado</option>
+    </select>
+  </section>
+
+  <section class="seccion">
+  <h2>✨ Tu Colección</h2>
+  <div id="listaManhwas" class="carrusel"></div>
+</section>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2>Agregar Manhwa</h2>
+
+      <input type="text" id="titulo" placeholder="Título">
+      <input type="text" id="generos" placeholder="Géneros (separados por coma)">
+      <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5">
+      <input type="text" id="imagen" placeholder="URL portada">
+      <select id="estado">
+        <option value="Leyendo">Leyendo</option>
+        <option value="Completado">Completado</option>
+        <option value="Pausado">Pausado</option>
+      </select>
+      <textarea id="notas" placeholder="Notas personales"></textarea>
+
+      <button id="guardar">Guardar</button>
+      <button id="cerrarModal">Cancelar</button>
+    </div>
+  </div>
+
+<div class="music-control">
+  <button onclick="toggleMusica()">🎵 Música</button>
+</div>
+
+<audio id="musicaFondo" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_soft_ambient.mp3" type="audio/mpeg">
+</audio>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_AUTH_DOMAIN",
+  projectId: "TU_PROJECT_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.guardarEnNube = async (manhwa) => {
+  await addDoc(collection(db, "manhwas"), manhwa);
+};
+
+window.cargarDesdeNube = async () => {
+  const querySnapshot = await getDocs(collection(db, "manhwas"));
+  manhwas = [];
+  querySnapshot.forEach((doc) => {
+    manhwas.push(doc.data());
+  });
+  render();
+};
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
