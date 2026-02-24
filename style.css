@@ -1,0 +1,300 @@
+:root {
+  color-scheme: light;
+  --bg: #fff5fa;
+  --bg-soft: #e9fffb;
+  --card: #ffffff;
+  --text: #2b2030;
+  --muted: #6f5e76;
+  --primary: #e56aa6;
+  --secondary: #22a9a1;
+  --danger: #c81e5b;
+  --border: #f4c8dc;
+  --turq-border: #95e8df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 10% 0%, var(--bg-soft), var(--bg));
+  color: var(--text);
+}
+
+.container {
+  width: min(980px, 94vw);
+  margin: 2rem auto;
+  display: grid;
+  gap: 1rem;
+}
+
+header {
+  background: linear-gradient(120deg, #ffd7e8, #c9fff7);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+header h1 {
+  margin: 0 0 0.3rem;
+}
+
+header p {
+  margin: 0;
+  color: #5f4b67;
+}
+
+
+.main-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.nav-item {
+  background: #ffffff;
+  color: var(--text);
+  border: 1px solid var(--turq-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.nav-item .nav-icon {
+  font-size: 1.05rem;
+}
+
+.nav-item.active {
+  background: linear-gradient(120deg, #ffd7e8, #c9fff7);
+  border-color: var(--border);
+  font-weight: 800;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 8px 22px rgba(229, 106, 166, 0.09);
+}
+
+form,
+label {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+label {
+  font-weight: 700;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  font-weight: 700;
+  background: var(--primary);
+  color: #fff;
+}
+
+button.secondary {
+  background: var(--secondary);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+.form-actions,
+.item-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.manhwa-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.item {
+  border: 1px solid var(--turq-border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: linear-gradient(160deg, #fff, #f8fffd);
+  display: grid;
+  gap: 0.6rem;
+}
+
+.item-top {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.item-cover {
+  width: 84px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.item-title {
+  font-weight: 800;
+  color: #7a2351;
+}
+
+.item-meta {
+  color: var(--muted);
+  margin: 0.1rem 0;
+}
+
+#empty-state {
+  color: var(--muted);
+}
+
+dialog {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-width: 440px;
+  width: 92vw;
+}
+
+.modal-content {
+  display: grid;
+  gap: 0.65rem;
+}
+
+#details-cover {
+  width: 130px;
+  height: 182px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--turq-border);
+}
+
+@media (max-width: 760px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.rating-row {
+  margin-top: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rating-number {
+  font-weight: 800;
+  color: #7a2351;
+}
+
+.rating-stars {
+  color: #f39c12;
+  letter-spacing: 0.06rem;
+  font-weight: 700;
+}
+
+
+.view {
+  display: block;
+}
+
+.profile-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  background: linear-gradient(120deg, #ffd7e8, #c9fff7);
+  border: 1px solid var(--border);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--turq-border);
+  border-radius: 12px;
+  padding: 0.7rem;
+}
+
+.stat-card h3 {
+  margin: 0;
+  color: #7a2351;
+}
+
+.stat-card p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+
+.profile-extra {
+  border-top: 1px dashed var(--border);
+  padding-top: 0.6rem;
+}
+
+.profile-extra p {
+  margin: 0.3rem 0;
+}
