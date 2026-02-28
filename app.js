@@ -1,6 +1,5 @@
 const STORAGE_KEY = "manhwas-leidos";
 const SETTINGS_KEY = "manhwas-preferencias";
-const TAB_KEY = "manhwas-tab-activa";
 
 const TRACKS = {
   none: "",
@@ -48,6 +47,12 @@ const clearAllButton = document.querySelector("#clear-all");
 const submitButton = document.querySelector("#submit-btn");
 const cancelEditButton = document.querySelector("#cancel-edit");
 const viewModeSelect = document.querySelector("#view-mode-select");
+const quickExportButton = document.querySelector("#quick-export");
+const quickImportButton = document.querySelector("#quick-import");
+const openProfileSettingsButton = document.querySelector("#open-profile-settings");
+const quickMode = document.querySelector("#quick-mode");
+const quickView = document.querySelector("#quick-view");
+const quickMusic = document.querySelector("#quick-music");
 
 const profileStats = document.querySelector("#profile-stats");
 const profileExtra = document.querySelector("#profile-extra");
@@ -73,6 +78,9 @@ const goalFinishPendingInput = document.querySelector("#goal-finish-pending");
 const saveGoalsButton = document.querySelector("#save-goals");
 const goalProgress = document.querySelector("#goal-progress");
 const profileTimeline = document.querySelector("#profile-timeline");
+
+const profileStats = document.querySelector("#profile-stats");
+const profileExtra = document.querySelector("#profile-extra");
 
 const detailsModal = document.querySelector("#details-modal");
 const detailsTitle = document.querySelector("#details-title");
@@ -110,7 +118,6 @@ function saveSettings() {
 }
 
 function switchTab(tab) {
-  localStorage.setItem(TAB_KEY, tab);
   Object.entries(views).forEach(([name, node]) => {
     node.hidden = name !== tab;
   });
@@ -145,6 +152,7 @@ function fileToDataURL(file) {
 
 function getCover(item) {
   return item.coverData || item.coverUrl || "https://placehold.co/80x110/2d2342/e5d3ff?text=Sin+portada";
+  return item.coverData || item.coverUrl || "https://placehold.co/80x110/f8cfe0/1e7f86?text=Sin+portada";
 }
 
 function getStarString(value) {
@@ -199,6 +207,7 @@ function calculateProfileStats(items) {
     acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
+
   const topStatus = Object.entries(statusCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
 
   const genreCount = items
@@ -207,6 +216,7 @@ function calculateProfileStats(items) {
       acc[genre] = (acc[genre] || 0) + 1;
       return acc;
     }, {});
+
   const topGenres = Object.entries(genreCount)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
@@ -214,6 +224,7 @@ function calculateProfileStats(items) {
     .join(", ") || "Sin géneros aún";
 
   const latest = items[0]?.title || "-";
+
   return { totalManhwas, totalRead, avgRating, topStatus, topGenres, latest };
 }
 
@@ -409,6 +420,23 @@ function syncSettingsUI() {
 }
 
 
+function syncQuickLibrary() {
+  const modeLabel = settings.mode === "light" ? "Claro" : "Oscuro";
+  const viewMap = {
+    list: "Lista",
+    "webtoon-carousel": "Webtoon carrusel",
+    netflix: "Estilo Netflix",
+  };
+  const musicMap = {
+    none: "Sin música",
+    lofi: "Lofi romántico",
+    rain: "Lluvia nocturna",
+  };
+
+  quickMode.textContent = modeLabel;
+  quickView.textContent = viewMap[settings.viewMode] || settings.viewMode;
+  quickMusic.textContent = musicMap[settings.musicTrack] || "Sin música";
+}
 
 function configureMusic(track, volume) {
   ambientAudio.volume = Number(volume);
@@ -446,6 +474,13 @@ async function toggleMusic() {
 
 function applyAllSettings() {
   applyThemeMode(settings.mode);
+  syncQuickLibrary();
+  applyViewMode(settings.viewMode);
+  applyCustomTheme(settings.customTheme);
+  configureMusic(settings.musicTrack, settings.musicVolume);
+  syncQuickLibrary();
+  syncSettingsUI();
+  syncQuickLibrary();
   applyViewMode(settings.viewMode);
   applyCustomTheme(settings.customTheme);
   configureMusic(settings.musicTrack, settings.musicVolume);
@@ -500,6 +535,8 @@ function render() {
     } else {
       content.append(title, meta, chapters, ratingNode);
     }
+
+    content.append(title, meta, chapters, ratingNode);
     top.append(cover, content);
 
     const actions = document.createElement("div");
@@ -605,6 +642,7 @@ form.addEventListener("submit", async (event) => {
 
   const chaptersRead = chaptersReadInput.value.trim();
   const chaptersTotal = chaptersTotalInput.value.trim();
+
   if (chaptersRead && chaptersTotal && Number(chaptersRead) > Number(chaptersTotal)) {
     alert("Los capítulos leídos no pueden ser mayores al total de capítulos.");
     return;
@@ -612,6 +650,11 @@ form.addEventListener("submit", async (event) => {
 
   const ratingRaw = ratingInput.value.trim();
   const rating = ratingRaw === "" ? "" : Number(ratingRaw);
+  const previousItem = itemId ? loadManhwas().find((item) => item.id === itemId) : null;
+
+  const ratingRaw = ratingInput.value.trim();
+  const rating = ratingRaw === "" ? "" : Number(ratingRaw);
+
   if (ratingRaw !== "" && (!Number.isFinite(rating) || rating < 0 || rating > 5)) {
     alert("La valoración debe estar entre 0 y 5.");
     return;
@@ -655,6 +698,9 @@ form.addEventListener("submit", async (event) => {
 });
 
 cancelEditButton.addEventListener("click", resetForm);
+cancelEditButton.addEventListener("click", () => {
+  resetForm();
+});
 
 clearAllButton.addEventListener("click", () => {
   localStorage.removeItem(STORAGE_KEY);
@@ -677,6 +723,7 @@ viewModeSelect.addEventListener("change", () => {
   saveSettings();
   applyViewMode(settings.viewMode);
   profileViewModeSelect.value = settings.viewMode;
+  syncQuickLibrary();
 });
 
 profileViewModeSelect.addEventListener("change", () => {
@@ -684,18 +731,21 @@ profileViewModeSelect.addEventListener("change", () => {
   saveSettings();
   applyViewMode(settings.viewMode);
   viewModeSelect.value = settings.viewMode;
+  syncQuickLibrary();
 });
 
 themeModeSelect.addEventListener("change", () => {
   settings.mode = themeModeSelect.value;
   saveSettings();
   applyThemeMode(settings.mode);
+  syncQuickLibrary();
 });
 
 musicTrackSelect.addEventListener("change", () => {
   settings.musicTrack = musicTrackSelect.value;
   saveSettings();
   configureMusic(settings.musicTrack, settings.musicVolume);
+  syncQuickLibrary();
 });
 
 musicVolumeInput.addEventListener("input", () => {
@@ -722,6 +772,7 @@ resetThemeButton.addEventListener("click", () => {
   saveSettings();
   applyCustomTheme(null);
   syncSettingsUI();
+  syncQuickLibrary();
 });
 
 saveGoalsButton.addEventListener("click", () => {
@@ -733,6 +784,10 @@ saveGoalsButton.addEventListener("click", () => {
   renderProfile();
 });
 
+quickExportButton.addEventListener("click", exportData);
+quickImportButton.addEventListener("click", () => importFileInput.click());
+openProfileSettingsButton.addEventListener("click", () => switchTab("perfil"));
+
 exportDataButton.addEventListener("click", exportData);
 
 importDataButton.addEventListener("click", () => {
@@ -743,7 +798,7 @@ importFileInput.addEventListener("change", async () => {
   await importData(importFileInput.files[0]);
 });
 
-const initialTab = localStorage.getItem(TAB_KEY) || "biblioteca";
-switchTab(initialTab);
+switchTab("home");
 applyAllSettings();
+switchTab("home");
 render();

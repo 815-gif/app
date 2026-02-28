@@ -15,6 +15,9 @@ Aplicación web simple (HTML/CSS/JS) para guardar los manhwas que ya leíste usa
 - Importar y exportar tu biblioteca en formato **JSON** desde la sección de perfil.
 - Preferencias avanzadas: **modo claro/oscuro**, vista **Webtoon carrusel** o **estilo Netflix**, música ambiental configurable y editor de temas personalizados.
 - Extra de lectura: **meta mensual**, estado emocional del manhwa, detector de tropes (ej. Reencarnación) y línea del tiempo para ver tu evolución lectora.
+- Tema visual con toque **rosa de flores de cerezo + turquesa**.
+- Barra de navegación con iconos de **Home**, **Biblioteca** y **Perfil**.
+- Perfil con estadísticas automáticas: total guardados, capítulos leídos, promedio de valoración, estado frecuente, géneros top y último agregado.
 
 ## Cómo usar
 
