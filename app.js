@@ -73,6 +73,9 @@ const saveGoalsButton = document.querySelector("#save-goals");
 const goalProgress = document.querySelector("#goal-progress");
 const profileTimeline = document.querySelector("#profile-timeline");
 
+const profileStats = document.querySelector("#profile-stats");
+const profileExtra = document.querySelector("#profile-extra");
+
 const detailsModal = document.querySelector("#details-modal");
 const detailsTitle = document.querySelector("#details-title");
 const detailsCover = document.querySelector("#details-cover");
@@ -143,6 +146,7 @@ function fileToDataURL(file) {
 
 function getCover(item) {
   return item.coverData || item.coverUrl || "https://placehold.co/80x110/2d2342/e5d3ff?text=Sin+portada";
+  return item.coverData || item.coverUrl || "https://placehold.co/80x110/f8cfe0/1e7f86?text=Sin+portada";
 }
 
 function getStarString(value) {
@@ -197,6 +201,7 @@ function calculateProfileStats(items) {
     acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
+
   const topStatus = Object.entries(statusCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
 
   const genreCount = items
@@ -205,6 +210,7 @@ function calculateProfileStats(items) {
       acc[genre] = (acc[genre] || 0) + 1;
       return acc;
     }, {});
+
   const topGenres = Object.entries(genreCount)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
@@ -212,6 +218,7 @@ function calculateProfileStats(items) {
     .join(", ") || "Sin géneros aún";
 
   const latest = items[0]?.title || "-";
+
   return { totalManhwas, totalRead, avgRating, topStatus, topGenres, latest };
 }
 
@@ -496,6 +503,8 @@ function render() {
     } else {
       content.append(title, meta, chapters, ratingNode);
     }
+
+    content.append(title, meta, chapters, ratingNode);
     top.append(cover, content);
 
     const actions = document.createElement("div");
@@ -601,6 +610,7 @@ form.addEventListener("submit", async (event) => {
 
   const chaptersRead = chaptersReadInput.value.trim();
   const chaptersTotal = chaptersTotalInput.value.trim();
+
   if (chaptersRead && chaptersTotal && Number(chaptersRead) > Number(chaptersTotal)) {
     alert("Los capítulos leídos no pueden ser mayores al total de capítulos.");
     return;
@@ -608,6 +618,11 @@ form.addEventListener("submit", async (event) => {
 
   const ratingRaw = ratingInput.value.trim();
   const rating = ratingRaw === "" ? "" : Number(ratingRaw);
+  const previousItem = itemId ? loadManhwas().find((item) => item.id === itemId) : null;
+
+  const ratingRaw = ratingInput.value.trim();
+  const rating = ratingRaw === "" ? "" : Number(ratingRaw);
+
   if (ratingRaw !== "" && (!Number.isFinite(rating) || rating < 0 || rating > 5)) {
     alert("La valoración debe estar entre 0 y 5.");
     return;
@@ -651,6 +666,9 @@ form.addEventListener("submit", async (event) => {
 });
 
 cancelEditButton.addEventListener("click", resetForm);
+cancelEditButton.addEventListener("click", () => {
+  resetForm();
+});
 
 clearAllButton.addEventListener("click", () => {
   localStorage.removeItem(STORAGE_KEY);
@@ -741,4 +759,5 @@ importFileInput.addEventListener("change", async () => {
 
 switchTab("home");
 applyAllSettings();
+switchTab("home");
 render();
