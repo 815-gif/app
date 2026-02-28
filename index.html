@@ -13,6 +13,25 @@
         <p>Webtoon aesthetic romántico pastel + dark lavender elegante.</p>
       </header>
 
+        <h1>🌸📚 Mis Manhwas Leídos</h1>
+        <p>Guarda y organiza tus lecturas con estilo sakura y turquesa.</p>
+      </header>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button type="button" class="nav-item active" data-tab="home" aria-current="page">
+          <span class="nav-icon" aria-hidden="true">🏠</span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="biblioteca">
+          <span class="nav-icon" aria-hidden="true">📚</span>
+          <span>Biblioteca</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="perfil">
+          <span class="nav-icon" aria-hidden="true">👤</span>
+          <span>Perfil</span>
+        </button>
+      </nav>
+
       <section id="home-view" class="view">
         <section class="card">
           <h2>Agregar manhwa</h2>
@@ -120,6 +139,8 @@
               </select>
               <button id="clear-all" class="danger" type="button">Borrar todo</button>
             </div>
+            <h2>Lista de leídos</h2>
+            <button id="clear-all" class="danger" type="button">Borrar todo</button>
           </div>
           <p id="empty-state">Aún no has guardado manhwas.</p>
           <ul id="manhwa-list" class="manhwa-list" aria-live="polite"></ul>
@@ -132,6 +153,9 @@
             <div class="avatar">☺</div>
             <div>
               <h2 id="profile-name">Mi Perfil</h2>
+            <div class="avatar">👤</div>
+            <div>
+              <h2 id="profile-name">Mi Perfil Lector</h2>
               <p id="profile-bio">Fan de manhwas con buena historia y arte.</p>
             </div>
           </div>
