@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mis Manhwas Leídos</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>🌙📚 Mis Manhwas Leídos</h1>
+        <p>Webtoon aesthetic romántico pastel + dark lavender elegante.</p>
+      </header>
+
+      <section id="home-view" class="view">
+        <section class="card">
+          <h2>Agregar manhwa</h2>
+          <form id="manhwa-form">
+            <input id="item-id" type="hidden" />
+            <label>
+              Título
+              <input id="title" type="text" placeholder="Ej. Solo Leveling" required />
+            </label>
+            <div class="grid-2">
+              <label>
+                Autor (opcional)
+                <input id="author" type="text" placeholder="Ej. Chugong" />
+              </label>
+              <label>
+                Artista (opcional)
+                <input id="artist" type="text" placeholder="Ej. Dubu" />
+              </label>
+            </div>
+            <div class="grid-2">
+              <label>
+                Tipo (opcional)
+                <input id="type" type="text" placeholder="Ej. Manhwa / Webtoon" />
+              </label>
+              <label>
+                Demografía (opcional)
+                <input id="demography" type="text" placeholder="Ej. Shonen, Seinen" />
+              </label>
+            </div>
+            <div class="grid-2">
+              <label>
+                Género (opcional)
+                <input id="genre" type="text" placeholder="Ej. Acción, Fantasía" />
+              </label>
+              <label>
+                Estado
+                <select id="status">
+                  <option>Leyendo</option>
+                  <option>Publicandose</option>
+                  <option>Hiatus</option>
+                  <option>Finalizado</option>
+                  <option>Pausado</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid-2">
+              <label>
+                Capítulos leídos (opcional)
+                <input id="chapters-read" type="number" min="0" placeholder="Ej. 180" />
+              </label>
+              <label>
+                Total de capítulos (opcional)
+                <input id="chapters-total" type="number" min="0" placeholder="Ej. 200" />
+              </label>
+            </div>
+            <label>
+              URL de portada (opcional)
+              <input id="cover-url" type="url" placeholder="https://..." />
+            </label>
+            <label>
+              O subir foto desde tu galería (opcional)
+              <input id="cover-file" type="file" accept="image/*" />
+            </label>
+            <label>
+              Valoración (0 a 5)
+              <input id="rating" type="number" min="0" max="5" step="0.5" placeholder="Ej. 4.5" />
+            </label>
+            <label>
+              Estado emocional del manhwa
+              <select id="emotion">
+                <option value="">Selecciona una vibra</option>
+                <option>Lento pero hermoso</option>
+                <option>Tóxico pero adictivo</option>
+                <option>Reconfortante</option>
+                <option>Me hizo sufrir</option>
+                <option>Green flag ML</option>
+                <option>Red flag pero me gusta</option>
+              </select>
+            </label>
+            <label class="checkbox-row">
+              <input id="trope-reencarnacion" type="checkbox" />
+              Tiene trope: Reencarnación
+            </label>
+            <label>
+              Nota personal (opcional)
+              <textarea id="note" rows="3" placeholder="¿Qué te pareció?"></textarea>
+            </label>
+            <div class="form-actions">
+              <button id="submit-btn" type="submit">Guardar</button>
+              <button id="cancel-edit" type="button" class="secondary" hidden>Cancelar edición</button>
+            </div>
+          </form>
+        </section>
+      </section>
+
+      <section id="biblioteca-view" class="view" hidden>
+        <section class="card">
+          <div class="list-header library-head">
+            <h2>Biblioteca · Lista de leídos</h2>
+            <div class="list-tools">
+              <select id="view-mode-select" aria-label="Modo de vista biblioteca">
+                <option value="list">Lista</option>
+                <option value="webtoon-carousel">Webtoon carrusel</option>
+                <option value="netflix">Estilo Netflix</option>
+              </select>
+              <button id="clear-all" class="danger" type="button">Borrar todo</button>
+            </div>
+            <h3 class="library-subtitle">Lista de leídos</h3>
+          </div>
+
+          <section class="library-quick-grid">
+            <article class="settings-box library-profile-card">
+              <div class="profile-head compact">
+                <div class="avatar">☺</div>
+                <div>
+                  <h3>Mi Perfil</h3>
+                  <p>Fan de manhwas con buena historia y arte.</p>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button id="quick-export" type="button">Exportar</button>
+                <button id="quick-import" class="secondary" type="button">Importar</button>
+              </div>
+            </article>
+
+            <article class="settings-box">
+              <h3>Apariencia y sonido (rápido)</h3>
+              <div class="library-quick-text">
+                <p><strong>Modo:</strong> <span id="quick-mode">-</span></p>
+                <p><strong>Vista:</strong> <span id="quick-view">-</span></p>
+                <p><strong>Música:</strong> <span id="quick-music">-</span></p>
+              </div>
+              <div class="profile-actions">
+                <button id="open-profile-settings" type="button">Abrir ajustes de Perfil</button>
+              </div>
+            </article>
+          </section>
+
+          <p id="empty-state">Aún no has guardado manhwas.</p>
+          <ul id="manhwa-list" class="manhwa-list" aria-live="polite"></ul>
+        </section>
+      </section>
+
+      <section id="perfil-view" class="view" hidden>
+        <section class="card profile-card">
+          <aside class="profile-sidebar settings-box">
+            <div class="profile-head">
+              <div class="avatar">☺</div>
+              <div>
+                <h2 id="profile-name">Mi Perfil</h2>
+                <p id="profile-bio">Fan de manhwas con buena historia y arte.</p>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <button id="export-data" type="button">Exportar</button>
+              <button id="import-data" class="secondary" type="button">Importar</button>
+              <input id="import-file" type="file" accept="application/json" hidden />
+            </div>
+            <div class="profile-extra" id="profile-extra"></div>
+          </aside>
+
+          <div class="profile-main">
+            <div class="stats-grid" id="profile-stats"></div>
+
+            <section class="settings-box">
+              <h3>Apariencia</h3>
+              <div class="grid-2">
+                <label>
+                  Modo visual
+                  <select id="theme-mode">
+                    <option value="dark">Oscuro</option>
+                    <option value="light">Claro</option>
+                  </select>
+                </label>
+                <label>
+                  Vista favorita de biblioteca
+                  <select id="profile-view-mode">
+                    <option value="list">Lista</option>
+                    <option value="webtoon-carousel">Webtoon carrusel</option>
+                    <option value="netflix">Estilo Netflix</option>
+                  </select>
+                </label>
+              </div>
+            </section>
+
+            <section class="settings-box">
+              <h3>Música ambiental</h3>
+              <div class="grid-2">
+                <label>
+                  Pista
+                  <select id="music-track">
+                    <option value="none">Sin música</option>
+                    <option value="lofi">Lofi romántico</option>
+                    <option value="rain">Lluvia nocturna</option>
+                  </select>
+                </label>
+                <label>
+                  Volumen
+                  <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.25" />
+                </label>
+              </div>
+              <div class="profile-actions">
+                <button id="music-toggle" type="button">Reproducir</button>
+              </div>
+              <audio id="ambient-audio" loop></audio>
+            </section>
+
+            <section class="settings-box">
+              <h3>Editor de tema personalizado</h3>
+              <div class="grid-2">
+                <label>
+                  Color primario
+                  <input id="theme-primary" type="color" value="#d38bff" />
+                </label>
+                <label>
+                  Color secundario
+                  <input id="theme-secondary" type="color" value="#82e2d8" />
+                </label>
+                <label>
+                  Fondo
+                  <input id="theme-bg" type="color" value="#140f1f" />
+                </label>
+                <label>
+                  Tarjetas
+                  <input id="theme-card" type="color" value="#241a35" />
+                </label>
+              </div>
+              <div class="profile-actions">
+                <button id="apply-theme" type="button">Aplicar tema</button>
+                <button id="reset-theme" class="secondary" type="button">Restablecer</button>
+              </div>
+            </section>
+
+            <section class="settings-box">
+              <h3>Meta mensual</h3>
+              <div class="grid-2">
+                <label>
+                  Leer manhwas este mes
+                  <input id="goal-read-month" type="number" min="0" value="5" />
+                </label>
+                <label>
+                  Terminar historias pendientes
+                  <input id="goal-finish-pending" type="number" min="0" value="2" />
+                </label>
+              </div>
+              <div class="profile-actions">
+                <button id="save-goals" type="button">Guardar metas</button>
+              </div>
+              <div id="goal-progress" class="profile-extra"></div>
+            </section>
+
+            <section class="settings-box">
+              <h3>Línea del tiempo de lectura</h3>
+              <div id="profile-timeline" class="timeline"></div>
+            </section>
+          </div>
+        </section>
+      </section>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button type="button" class="nav-item active" data-tab="home" aria-current="page">
+          <span class="nav-icon" aria-hidden="true">⌂</span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="biblioteca">
+          <span class="nav-icon" aria-hidden="true">☰</span>
+          <span>Biblioteca</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="perfil">
+          <span class="nav-icon" aria-hidden="true">☺</span>
+          <span>Perfil</span>
+        </button>
+      </nav>
+
+      <dialog id="details-modal">
+        <article class="modal-content">
+          <h3 id="details-title">Detalle</h3>
+          <img id="details-cover" alt="Portada del manhwa" hidden />
+          <div id="details-info"></div>
+          <p id="details-note"></p>
+          <button id="close-details" type="button">Cerrar</button>
+        </article>
+      </dialog>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
