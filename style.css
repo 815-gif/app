@@ -1,0 +1,256 @@
+:root {
+  color-scheme: dark;
+  --bg: #140f1f;
+  --bg-soft: #211530;
+  --card: #241a35;
+  --card-2: #2c2140;
+  --text: #f3ecff;
+  --muted: #c8b8df;
+  --primary: #d38bff;
+  --secondary: #82e2d8;
+  --danger: #ff6f9f;
+  --border: #5a447d;
+  --turq-border: #4f938f;
+  --glow: 0 10px 28px rgba(211, 139, 255, 0.24);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 15% -10%, rgba(211, 139, 255, 0.28), transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(130, 226, 216, 0.2), transparent 35%),
+    linear-gradient(180deg, var(--bg-soft), var(--bg));
+  color: var(--text);
+  padding-bottom: 5.8rem;
+}
+
+body.light-mode {
+  --bg: #f7efff;
+  --bg-soft: #fff8fd;
+  --card: #ffffff;
+  --card-2: #f4ebff;
+  --text: #241639;
+  --muted: #6f5a90;
+  --border: #cfb6f1;
+  --turq-border: #8ecdc8;
+  --glow: 0 8px 24px rgba(173, 125, 220, 0.2);
+}
+
+.container { width: min(980px, 94vw); margin: 2rem auto; display: grid; gap: 1rem; }
+
+header {
+  background: linear-gradient(120deg, rgba(211, 139, 255, 0.22), rgba(130, 226, 216, 0.18));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: var(--glow);
+}
+header h1 { margin: 0 0 0.3rem; }
+header p { margin: 0; color: var(--muted); }
+
+.main-nav {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 0.8rem;
+  width: min(980px, 94vw); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem; z-index: 20; background: rgba(24, 17, 34, 0.85);
+  border: 1px solid var(--border); border-radius: 14px; padding: 0.42rem;
+  backdrop-filter: blur(8px); box-shadow: var(--glow);
+}
+
+body.light-mode .main-nav { background: rgba(250, 243, 255, 0.88); }
+
+.nav-item {
+  background: linear-gradient(160deg, #271b3a, #1f162f);
+  color: var(--text); border: 1px solid #604587; display: flex; align-items: center;
+  justify-content: center; gap: 0.4rem; padding: 0.65rem 0.75rem;
+}
+body.light-mode .nav-item { background: linear-gradient(160deg, #f7edff, #efe4ff); border-color: #baa2dd; }
+
+.nav-item .nav-icon { font-size: 1.15rem; }
+.nav-item.active {
+  background: linear-gradient(120deg, rgba(211, 139, 255, 0.34), rgba(130, 226, 216, 0.24));
+  border-color: #a77bd3; font-weight: 800;
+}
+
+.card {
+  background: linear-gradient(160deg, var(--card), var(--card-2));
+  border: 1px solid var(--border); border-radius: 14px; padding: 1rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+form, label { display: grid; gap: 0.55rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+label { font-weight: 700; }
+
+input, textarea, select, button { font: inherit; }
+input, textarea, select {
+  padding: 0.65rem 0.75rem; border: 1px solid #6e57a1; border-radius: 10px;
+  background: #1a1328; color: var(--text);
+}
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select { background: #fff; }
+
+input::placeholder, textarea::placeholder { color: #b6a3cf; }
+
+button {
+  cursor: pointer; border: 0; border-radius: 10px; padding: 0.6rem 0.9rem;
+  font-weight: 700; background: var(--primary); color: #140f1f;
+}
+button.secondary { background: var(--secondary); color: #102021; }
+button.danger { background: var(--danger); color: #2a1020; }
+
+.form-actions, .item-actions, .profile-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.list-header { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+.list-tools { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+.manhwa-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+
+.item {
+  border: 1px solid var(--turq-border); border-radius: 12px; padding: 0.75rem;
+  background: linear-gradient(165deg, #2b2040, #1e1730); display: grid; gap: 0.6rem;
+}
+body.light-mode .item { background: linear-gradient(165deg, #ffffff, #f3ebff); }
+
+.item-top { display: flex; gap: 0.75rem; }
+.item-cover { width: 84px; height: 112px; object-fit: cover; border-radius: 8px; border: 2px solid #8f6db8; flex-shrink: 0; }
+.item-title { font-weight: 800; color: #f6dcff; }
+body.light-mode .item-title { color: #4a2f73; }
+.item-meta, #empty-state, .profile-extra p, .stat-card p { color: var(--muted); }
+
+/* View modes */
+.manhwa-list.mode-list { grid-template-columns: 1fr; }
+
+.manhwa-list.mode-webtoon-carousel {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 280px);
+  overflow-x: auto; padding-bottom: 0.6rem; scroll-snap-type: x mandatory;
+}
+.manhwa-list.mode-webtoon-carousel .item { min-height: 260px; scroll-snap-align: start; }
+.manhwa-list.mode-webtoon-carousel .item-top { flex-direction: column; }
+.manhwa-list.mode-webtoon-carousel .item-cover { width: 100%; height: 200px; }
+
+.manhwa-list.mode-netflix {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(320px, 360px);
+  overflow-x: auto; padding-bottom: 0.6rem; gap: 0.9rem; scroll-snap-type: x proximity;
+}
+.manhwa-list.mode-netflix .item {
+  background: linear-gradient(160deg, #1d122e, #27173b);
+  border-color: #7f5aac;
+  scroll-snap-align: start;
+}
+.manhwa-list.mode-netflix .item-cover { width: 115px; height: 155px; }
+
+.settings-box {
+  border: 1px dashed var(--border); border-radius: 12px; padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+.settings-box h3 { margin-top: 0; }
+.settings-box .grid-2 { align-items: start; }
+
+dialog {
+  border: 1px solid var(--border); border-radius: 12px; max-width: 440px; width: 92vw;
+  background: #231934; color: var(--text);
+}
+body.light-mode dialog { background: #fff7ff; }
+.modal-content { display: grid; gap: 0.65rem; }
+#details-cover { width: 130px; height: 182px; object-fit: cover; border-radius: 8px; border: 2px solid var(--turq-border); }
+
+.rating-row { margin-top: 0.2rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.rating-number { font-weight: 800; color: #e9c3ff; }
+body.light-mode .rating-number { color: #7a54ae; }
+.rating-stars { color: #ffd36e; letter-spacing: 0.06rem; font-weight: 700; }
+
+.view { display: block; }
+.view[hidden] { display: none !important; }
+.profile-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.profile-sidebar,
+.profile-main {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.profile-head h2 {
+  margin: 0;
+}
+
+.profile-head p {
+  margin: 0.35rem 0 0;
+}
+
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.5rem; background: linear-gradient(120deg, rgba(211, 139, 255, 0.32), rgba(130, 226, 216, 0.26));
+  border: 1px solid var(--border);
+}
+
+.stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+.stat-card { background: linear-gradient(160deg, #2f2146, #251b36); border: 1px solid var(--turq-border); border-radius: 12px; padding: 0.7rem; }
+body.light-mode .stat-card { background: linear-gradient(160deg, #ffffff, #f4eaff); }
+.stat-card h3 { margin: 0; color: #f0ccff; }
+body.light-mode .stat-card h3 { color: #5f3f8e; }
+.profile-extra { border-top: 1px dashed #7e63a8; padding-top: 0.6rem; }
+
+@media (max-width: 760px) {
+  .grid-2, .stats-grid { grid-template-columns: 1fr; }
+  .profile-card { grid-template-columns: 1fr; }
+  .main-nav { bottom: 0.35rem; }
+  .list-header { flex-direction: column; align-items: stretch; }
+}
+
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-row input {
+  width: auto;
+}
+
+.emotion-chip {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.timeline {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.timeline p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.timeline-date {
+  margin-left: 0.3rem;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+
+
+
+
+
+
