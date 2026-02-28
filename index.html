@@ -13,6 +13,25 @@
         <p>Webtoon aesthetic romántico pastel + dark lavender elegante.</p>
       </header>
 
+        <h1>🌸📚 Mis Manhwas Leídos</h1>
+        <p>Guarda y organiza tus lecturas con estilo sakura y turquesa.</p>
+      </header>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button type="button" class="nav-item active" data-tab="home" aria-current="page">
+          <span class="nav-icon" aria-hidden="true">🏠</span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="biblioteca">
+          <span class="nav-icon" aria-hidden="true">📚</span>
+          <span>Biblioteca</span>
+        </button>
+        <button type="button" class="nav-item" data-tab="perfil">
+          <span class="nav-icon" aria-hidden="true">👤</span>
+          <span>Perfil</span>
+        </button>
+      </nav>
+
       <section id="home-view" class="view">
         <section class="card">
           <h2>Agregar manhwa</h2>
@@ -111,6 +130,7 @@
       <section id="biblioteca-view" class="view" hidden>
         <section class="card">
           <div class="list-header library-head">
+          <div class="list-header">
             <h2>Biblioteca · Lista de leídos</h2>
             <div class="list-tools">
               <select id="view-mode-select" aria-label="Modo de vista biblioteca">
@@ -151,6 +171,9 @@
             </article>
           </section>
 
+            <h2>Lista de leídos</h2>
+            <button id="clear-all" class="danger" type="button">Borrar todo</button>
+          </div>
           <p id="empty-state">Aún no has guardado manhwas.</p>
           <ul id="manhwa-list" class="manhwa-list" aria-live="polite"></ul>
         </section>
@@ -269,6 +292,118 @@
               <div id="profile-timeline" class="timeline"></div>
             </section>
           </div>
+          <div class="profile-head">
+            <div class="avatar">☺</div>
+            <div>
+              <h2 id="profile-name">Mi Perfil</h2>
+            <div class="avatar">👤</div>
+            <div>
+              <h2 id="profile-name">Mi Perfil Lector</h2>
+              <p id="profile-bio">Fan de manhwas con buena historia y arte.</p>
+            </div>
+          </div>
+
+          <div class="stats-grid" id="profile-stats"></div>
+
+          <div class="profile-actions">
+            <button id="export-data" type="button">Exportar</button>
+            <button id="import-data" class="secondary" type="button">Importar</button>
+            <input id="import-file" type="file" accept="application/json" hidden />
+          </div>
+
+          <section class="settings-box">
+            <h3>Apariencia</h3>
+            <div class="grid-2">
+              <label>
+                Modo visual
+                <select id="theme-mode">
+                  <option value="dark">Oscuro</option>
+                  <option value="light">Claro</option>
+                </select>
+              </label>
+              <label>
+                Vista favorita de biblioteca
+                <select id="profile-view-mode">
+                  <option value="list">Lista</option>
+                  <option value="webtoon-carousel">Webtoon carrusel</option>
+                  <option value="netflix">Estilo Netflix</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="settings-box">
+            <h3>Música ambiental</h3>
+            <div class="grid-2">
+              <label>
+                Pista
+                <select id="music-track">
+                  <option value="none">Sin música</option>
+                  <option value="lofi">Lofi romántico</option>
+                  <option value="rain">Lluvia nocturna</option>
+                </select>
+              </label>
+              <label>
+                Volumen
+                <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.25" />
+              </label>
+            </div>
+            <div class="profile-actions">
+              <button id="music-toggle" type="button">Reproducir</button>
+            </div>
+            <audio id="ambient-audio" loop></audio>
+          </section>
+
+          <section class="settings-box">
+            <h3>Editor de tema personalizado</h3>
+            <div class="grid-2">
+              <label>
+                Color primario
+                <input id="theme-primary" type="color" value="#d38bff" />
+              </label>
+              <label>
+                Color secundario
+                <input id="theme-secondary" type="color" value="#82e2d8" />
+              </label>
+              <label>
+                Fondo
+                <input id="theme-bg" type="color" value="#140f1f" />
+              </label>
+              <label>
+                Tarjetas
+                <input id="theme-card" type="color" value="#241a35" />
+              </label>
+            </div>
+            <div class="profile-actions">
+              <button id="apply-theme" type="button">Aplicar tema</button>
+              <button id="reset-theme" class="secondary" type="button">Restablecer</button>
+            </div>
+          </section>
+
+          <section class="settings-box">
+            <h3>Meta mensual</h3>
+            <div class="grid-2">
+              <label>
+                Leer manhwas este mes
+                <input id="goal-read-month" type="number" min="0" value="5" />
+              </label>
+              <label>
+                Terminar historias pendientes
+                <input id="goal-finish-pending" type="number" min="0" value="2" />
+              </label>
+            </div>
+            <div class="profile-actions">
+              <button id="save-goals" type="button">Guardar metas</button>
+            </div>
+            <div id="goal-progress" class="profile-extra"></div>
+          </section>
+
+          <section class="settings-box">
+            <h3>Línea del tiempo de lectura</h3>
+            <div id="profile-timeline" class="timeline"></div>
+          </section>
+
+          <div class="profile-extra" id="profile-extra"></div>
         </section>
       </section>
 
