@@ -129,6 +129,7 @@
 
       <section id="biblioteca-view" class="view" hidden>
         <section class="card">
+          <div class="list-header library-head">
           <div class="list-header">
             <h2>Biblioteca · Lista de leídos</h2>
             <div class="list-tools">
@@ -139,6 +140,37 @@
               </select>
               <button id="clear-all" class="danger" type="button">Borrar todo</button>
             </div>
+            <h3 class="library-subtitle">Lista de leídos</h3>
+          </div>
+
+          <section class="library-quick-grid">
+            <article class="settings-box library-profile-card">
+              <div class="profile-head compact">
+                <div class="avatar">☺</div>
+                <div>
+                  <h3>Mi Perfil</h3>
+                  <p>Fan de manhwas con buena historia y arte.</p>
+                </div>
+              </div>
+              <div class="profile-actions">
+                <button id="quick-export" type="button">Exportar</button>
+                <button id="quick-import" class="secondary" type="button">Importar</button>
+              </div>
+            </article>
+
+            <article class="settings-box">
+              <h3>Apariencia y sonido (rápido)</h3>
+              <div class="library-quick-text">
+                <p><strong>Modo:</strong> <span id="quick-mode">-</span></p>
+                <p><strong>Vista:</strong> <span id="quick-view">-</span></p>
+                <p><strong>Música:</strong> <span id="quick-music">-</span></p>
+              </div>
+              <div class="profile-actions">
+                <button id="open-profile-settings" type="button">Abrir ajustes de Perfil</button>
+              </div>
+            </article>
+          </section>
+
             <h2>Lista de leídos</h2>
             <button id="clear-all" class="danger" type="button">Borrar todo</button>
           </div>

@@ -224,6 +224,9 @@ body.light-mode .stat-card h3 { color: #5f3f8e; }
   .profile-card { grid-template-columns: 1fr; }
   .main-nav { bottom: 0.35rem; }
   .list-header { flex-direction: column; align-items: stretch; }
+  .library-head { grid-template-columns: 1fr; }
+  .library-subtitle { justify-self: start; }
+  .library-quick-grid { grid-template-columns: 1fr; }
 }
 
 
@@ -490,6 +493,38 @@ dialog {
   margin-left: 0.3rem;
   font-size: 0.8rem;
   opacity: 0.85;
+}
+
+
+.library-head {
+  grid-template-columns: 1.2fr auto 1fr;
+  align-items: center;
+}
+
+.library-subtitle {
+  margin: 0;
+  justify-self: end;
+  color: var(--text);
+}
+
+.library-quick-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 0.8rem;
+  margin: 0.85rem 0;
+}
+
+.library-profile-card h3,
+.library-profile-card p {
+  margin: 0;
+}
+
+.profile-head.compact {
+  align-items: flex-start;
+}
+
+.library-quick-text p {
+  margin: 0.35rem 0;
 .rating-number {
   font-weight: 800;
   color: #7a2351;

@@ -47,6 +47,12 @@ const clearAllButton = document.querySelector("#clear-all");
 const submitButton = document.querySelector("#submit-btn");
 const cancelEditButton = document.querySelector("#cancel-edit");
 const viewModeSelect = document.querySelector("#view-mode-select");
+const quickExportButton = document.querySelector("#quick-export");
+const quickImportButton = document.querySelector("#quick-import");
+const openProfileSettingsButton = document.querySelector("#open-profile-settings");
+const quickMode = document.querySelector("#quick-mode");
+const quickView = document.querySelector("#quick-view");
+const quickMusic = document.querySelector("#quick-music");
 
 const profileStats = document.querySelector("#profile-stats");
 const profileExtra = document.querySelector("#profile-extra");
@@ -413,6 +419,25 @@ function syncSettingsUI() {
   goalFinishPendingInput.value = settings.goals?.finishPending ?? 2;
 }
 
+
+function syncQuickLibrary() {
+  const modeLabel = settings.mode === "light" ? "Claro" : "Oscuro";
+  const viewMap = {
+    list: "Lista",
+    "webtoon-carousel": "Webtoon carrusel",
+    netflix: "Estilo Netflix",
+  };
+  const musicMap = {
+    none: "Sin música",
+    lofi: "Lofi romántico",
+    rain: "Lluvia nocturna",
+  };
+
+  quickMode.textContent = modeLabel;
+  quickView.textContent = viewMap[settings.viewMode] || settings.viewMode;
+  quickMusic.textContent = musicMap[settings.musicTrack] || "Sin música";
+}
+
 function configureMusic(track, volume) {
   ambientAudio.volume = Number(volume);
   if (!TRACKS[track]) {
@@ -449,6 +474,13 @@ async function toggleMusic() {
 
 function applyAllSettings() {
   applyThemeMode(settings.mode);
+  syncQuickLibrary();
+  applyViewMode(settings.viewMode);
+  applyCustomTheme(settings.customTheme);
+  configureMusic(settings.musicTrack, settings.musicVolume);
+  syncQuickLibrary();
+  syncSettingsUI();
+  syncQuickLibrary();
   applyViewMode(settings.viewMode);
   applyCustomTheme(settings.customTheme);
   configureMusic(settings.musicTrack, settings.musicVolume);
@@ -691,6 +723,7 @@ viewModeSelect.addEventListener("change", () => {
   saveSettings();
   applyViewMode(settings.viewMode);
   profileViewModeSelect.value = settings.viewMode;
+  syncQuickLibrary();
 });
 
 profileViewModeSelect.addEventListener("change", () => {
@@ -698,18 +731,21 @@ profileViewModeSelect.addEventListener("change", () => {
   saveSettings();
   applyViewMode(settings.viewMode);
   viewModeSelect.value = settings.viewMode;
+  syncQuickLibrary();
 });
 
 themeModeSelect.addEventListener("change", () => {
   settings.mode = themeModeSelect.value;
   saveSettings();
   applyThemeMode(settings.mode);
+  syncQuickLibrary();
 });
 
 musicTrackSelect.addEventListener("change", () => {
   settings.musicTrack = musicTrackSelect.value;
   saveSettings();
   configureMusic(settings.musicTrack, settings.musicVolume);
+  syncQuickLibrary();
 });
 
 musicVolumeInput.addEventListener("input", () => {
@@ -736,6 +772,7 @@ resetThemeButton.addEventListener("click", () => {
   saveSettings();
   applyCustomTheme(null);
   syncSettingsUI();
+  syncQuickLibrary();
 });
 
 saveGoalsButton.addEventListener("click", () => {
@@ -746,6 +783,10 @@ saveGoalsButton.addEventListener("click", () => {
   saveSettings();
   renderProfile();
 });
+
+quickExportButton.addEventListener("click", exportData);
+quickImportButton.addEventListener("click", () => importFileInput.click());
+openProfileSettingsButton.addEventListener("click", () => switchTab("perfil"));
 
 exportDataButton.addEventListener("click", exportData);
 
